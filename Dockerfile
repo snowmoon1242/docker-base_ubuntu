@@ -24,5 +24,10 @@ RUN apt-get install -y gcc git wget curl unzip make
 RUN echo "#!/bin/bash" > /etc/bootstrap.sh \
 && chmod 777 /etc/bootstrap.sh
 
+COPY bootstrap.sh /opt/bootstrap.sh
+#Add this layer's bootstrap to /etc/bootstrap.sh
+RUN cat /opt/bootstrap.sh >> /etc/bootstrap.sh
+RUN rm /opt/bootstrap.sh
+
 # This entry point will be inherited by all derived images
 ENTRYPOINT ["/etc/bootstrap.sh"]
